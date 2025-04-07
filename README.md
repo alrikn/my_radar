@@ -34,4 +34,5 @@ To show the help message:
 
 ## Disclaimer
 
+You need to have the csfml library installed to run this.
 There is a slight mem leak so be careful
