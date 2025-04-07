@@ -1,0 +1,4 @@
+my_radar
+*.o
+*.log
+*.a
