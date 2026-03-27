@@ -89,6 +89,23 @@ static void division_handler(core_t *fm)
     division(fm, planes, bucket);
 }
 
+static void free_all_dead_planes(core_t *fm)
+{
+    air_t *current = fm->head;
+    air_t *next_node;
+
+    if (current == NULL)
+        return;
+    do {
+        next_node = current->next;
+        if (current->dead == true) {
+            delete_node_air(&fm->head, current->num);
+        }
+        current = fm->head ? next_node : NULL;
+    } while (current && current != fm->head);
+}
+
+//we need to free after the division.
 int tick_operations(core_t *fm)
 {
     const air_t *head_ref = fm->head;
@@ -99,6 +116,7 @@ int tick_operations(core_t *fm)
     }
     tower_plane_interaction(fm);
     division_handler(fm);
+    free_all_dead_planes(fm);
     return 0;
 }
 

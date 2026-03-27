@@ -138,4 +138,3 @@ void free_list_rectangle(rect_t *head, core_t *fm)
     } while (temp != head);
     fm->head_rec = NULL;
 }
-

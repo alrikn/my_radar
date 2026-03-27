@@ -48,6 +48,7 @@ typedef struct temp_tower {
 typedef struct airplane {
     bool collision_exempt;
     bool visible_exempt;
+    bool dead;
     sfVector2f position;
     double distance;
     long int num;

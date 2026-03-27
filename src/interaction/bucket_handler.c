@@ -3,6 +3,10 @@
 ** my_radar
 ** File description:
 ** bucket_handler
+** we have a problem here which is invald reads.
+** instead of dealing with all that, we will just put the plane as dead = true,
+** and free it somewhere else, and in the meantime,
+** we will just ignore it in the collision and drawing functions.
 */
 
 #include "my.h"
@@ -89,16 +93,17 @@ void planes_collide(core_t *fm, air_t **planes, long int i, long int j)
     double dy = 0.0;
     double distance = 0;
 
-    if (!planes[i] || !planes[j] || !fm->head || (planes[i] == planes[j]))
+    if (!planes[i] || !planes[j] || !fm->head || (planes[i] == planes[j]) ||
+        planes[i]->dead == true || planes[j]->dead == true)
         return;
     if (planes[i]->collision_exempt == false && !planes[j]->collision_exempt) {
         dx = planes[i]->position.x - planes[j]->position.x;
         dy = planes[i]->position.y - planes[j]->position.y;
         distance = sqrt(dx * dx + dy * dy);
         if (distance <= COLLISION_THRESHOLD) {
-            delete_node_air(&fm->head, planes[i]->num);
+            planes[i]->dead = true;
             planes[i] = NULL;
-            delete_node_air(&fm->head, planes[j]->num);
+            planes[j]->dead = true;
             planes[j] = NULL;
             my_cooler_putstr("2 planes just collided \n");
         }

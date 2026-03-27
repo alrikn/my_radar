@@ -58,6 +58,7 @@ static air_t *create_node(core_t *fm)
     sfSprite_setScale(new->sprite, scale);
     sfSprite_setOrigin(new->sprite, (sfVector2f){siz.x / 2.0f, siz.y / 2.0f});
     new->square = square(new->position);
+    new->dead = false;
     new->next = NULL;
     new->prev = NULL;
     return new;
