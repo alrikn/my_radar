@@ -5,8 +5,8 @@
 ** linked_list_rectangle
 */
 
-#include "./include/my.h"
-#include "include/struct.h"
+#include "my.h"
+#include "struct.h"
 #include <SFML/Graphics/RectangleShape.h>
 
 static rect_t *create_node(core_t *fm, bucket_t *buc)

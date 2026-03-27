@@ -129,6 +129,22 @@ void remove_offending(core_t *fm, air_t **planes, bucket_t *self, int num)
     free(self);
 }
 
+//very flickery, but it works and its only for demonstration purposes
+static void draw_bucket_visualiser(bucket_t *bucket, core_t *fm)
+{
+    sfRectangleShape *rect = sfRectangleShape_create();
+    sfVector2f size = bucket->dimensions;
+    sfVector2f position = bucket->top_left;
+
+    sfRectangleShape_setSize(rect, size);
+    sfRectangleShape_setPosition(rect, position);
+    sfRectangleShape_setFillColor(rect, sfTransparent);
+    sfRectangleShape_setOutlineColor(rect, sfRed);
+    sfRectangleShape_setOutlineThickness(rect, 1.0f);
+    sfRenderWindow_drawRectangleShape(fm->window, rect, NULL);
+    sfRectangleShape_destroy(rect);
+}
+
 //self->children[a] = new_bucket;
 //add_to_list_rec(&fm->head_rec, fm, new_bucket);
 void division(core_t *fm, air_t **planes, bucket_t *self)
@@ -145,6 +161,8 @@ void division(core_t *fm, air_t **planes, bucket_t *self)
         new_bucket = malloc(sizeof *new_bucket);
         new_bucket->dimensions = make_new_dimensions(self, fm);
         new_bucket->top_left = make_new_top_left(fm, self, i);
+        if (fm->status.debug_mode == true)
+            draw_bucket_visualiser(new_bucket, fm);
         filtered_planes = filter_planes(fm, planes, new_bucket);
         division(fm, filtered_planes, new_bucket);
     }

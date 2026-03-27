@@ -19,6 +19,7 @@ static int explanation(void)
     my_cooler_putstr("\t-h\tprint the usage and quit\nUSER INTERACTIONS\n");
     my_cooler_putstr("\t'L' key\tenable/disable hitboxes and areas.\n");
     my_cooler_putstr("\t'S' key\tenable/disable sprites.\n");
+    my_cooler_putstr("\t'D' key\tenable/disable debug mode.\n");
     return 0;
 }
 
@@ -35,6 +36,12 @@ static void key_pressed(core_t *fm, sfEvent *event)
             fm->status.invisible_sprites = true;
         else
             fm->status.invisible_sprites = false;
+    }
+    if (event->key.code == sfKeyD) {
+        if (fm->status.debug_mode == false)
+            fm->status.debug_mode = true;
+        else
+            fm->status.debug_mode = false;
     }
 }
 

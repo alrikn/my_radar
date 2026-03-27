@@ -79,6 +79,7 @@ typedef struct status {
     bool game_crash;
     bool disable_hitboxes;
     bool invisible_sprites;
+    bool debug_mode;
 }status_t;
 
 typedef struct lag {

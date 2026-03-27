@@ -2,3 +2,5 @@ my_radar
 *.o
 *.log
 *.a
+TODO.md
+*.so
