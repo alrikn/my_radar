@@ -31,12 +31,14 @@ static sfCircleShape *circles(double radius, sfVector2f pos)
 static tow_t *create_node(core_t *fm)
 {
     tow_t *new = malloc(sizeof(tow_t));
-    sfTexture *text = sfTexture_createFromFile("./assets/satellite.png", NULL);
-    sfVector2u siz = sfTexture_getSize(text);
+    sfTexture *text = NULL;
+    sfVector2u siz;
     sfVector2f scale = {1, 1};
 
     if (!new)
         return NULL;
+    text = sfTexture_createFromFile("./assets/satellite.png", NULL);
+    siz = sfTexture_getSize(text);
     new->num = fm->air_num;
     new->position.y = fm->temp_tow.position.y;
     new->position.x = fm->temp_tow.position.x;
@@ -78,6 +80,8 @@ static void free_helper(tow_t *chosen_one)
     if (texture) {
         sfTexture_destroy(texture);
     }
+    if (chosen_one->circle)
+        sfCircleShape_destroy(chosen_one->circle);
     free(chosen_one);
     my_cooler_putstr("deleted a tower node\n");
 }

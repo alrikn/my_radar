@@ -159,11 +159,17 @@ void division(core_t *fm, air_t **planes, bucket_t *self)
         return remove_offending(fm, planes, self, num_planes);
     for (int i = 0; i < MAX_BUCKET_SIZE; i++) {
         new_bucket = malloc(sizeof *new_bucket);
+        if (!new_bucket)
+            break;
         new_bucket->dimensions = make_new_dimensions(self, fm);
         new_bucket->top_left = make_new_top_left(fm, self, i);
         if (fm->status.debug_mode == true)
             add_to_list_rec(&fm->head_rec, fm, new_bucket);
         filtered_planes = filter_planes(fm, planes, new_bucket);
+        if (!filtered_planes) {
+            free(new_bucket);
+            break;
+        }
         division(fm, filtered_planes, new_bucket);
     }
     free(self);

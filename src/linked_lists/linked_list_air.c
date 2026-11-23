@@ -47,12 +47,14 @@ static air_t *details(core_t *fm)
 static air_t *create_node(core_t *fm)
 {
     air_t *new = details(fm);
-    sfTexture *text = sfTexture_createFromFile("./assets/air_new.png", NULL);
-    sfVector2u siz = sfTexture_getSize(text);
+    sfTexture *text = NULL;
+    sfVector2u siz;
     sfVector2f scale = {1, 1};
 
     if (!new)
         return NULL;
+    text = sfTexture_createFromFile("./assets/air_new.png", NULL);
+    siz = sfTexture_getSize(text);
     new->sprite = sfSprite_create(text);
     sfSprite_setScale(new->sprite, scale);
     sfSprite_setOrigin(new->sprite, (sfVector2f){siz.x / 2.0f, siz.y / 2.0f});
@@ -110,6 +112,8 @@ static void free_helper(air_t *chosen_one)
     if (texture) {
         sfTexture_destroy(texture);
     }
+    if (chosen_one->square)
+        sfRectangleShape_destroy(chosen_one->square);
     free(chosen_one);
     my_cooler_putstr("deleted a plane node\n");
 }
@@ -174,9 +178,8 @@ void free_list(air_t *head)
         return;
     while (temp->next != head_ref) {
         to_free = temp;
-        sfSprite_destroy(to_free->sprite);
         temp = temp->next;
-        free(to_free);
+        free_helper(to_free);
     }
     free_helper(temp);
 }

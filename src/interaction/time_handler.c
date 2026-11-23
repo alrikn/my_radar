@@ -59,11 +59,16 @@ static air_t **mini_init(core_t *fm, bucket_t *buc, long int n)
 {
     air_t **pla;
 
+    if (!buc) {
+        fm->status.game_crash = true;
+        return NULL;
+    }
     buc->top_left = (sfVector2f){0.0, 0.0};
     buc->dimensions = (sfVector2f){1920, 1080};
     pla = malloc((n + 1) * sizeof(air_t *));
-    if (!pla || !buc) {
+    if (!pla) {
         fm->status.game_crash = true;
+        free(buc);
         return NULL;
     }
     return pla;
@@ -77,7 +82,7 @@ static void division_handler(core_t *fm)
     air_t **planes;
 
     planes = mini_init(fm, bucket, num);
-    if (!planes || !bucket)
+    if (!planes)
         return;
     current = fm->head;
     for (long int i = 0; i < num; i++) {

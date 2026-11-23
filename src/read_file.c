@@ -103,26 +103,21 @@ int types(char type, core_t *fm, char *line)
     return 0;
 }
 
-static int loop(FILE *file, char *line, core_t *fm)
+static int loop(FILE *file, char **line, core_t *fm)
 {
     size_t line_len = 0;
     char type;
-    ssize_t bytes_read;
 
-    bytes_read = getline(&line, &line_len, file);
-    while (bytes_read != -1) {
-        if (line[0] == '#' || line[0] == '\n')
+    while (getline(line, &line_len, file) != -1) {
+        if ((*line)[0] == '#' || (*line)[0] == '\n')
             continue;
-        type = line[0];
+        type = (*line)[0];
         if (type != 'A' && type != 'T') {
             my_error_putstr("Invalid line: ");
-            my_error_putstr(line);
-            free(line);
-            fclose(file);
+            my_error_putstr(*line);
             return 84;
         }
-        types(type, fm, line);
-        bytes_read = getline(&line, &line_len, file);
+        types(type, fm, *line);
     }
     return 0;
 }
@@ -131,15 +126,14 @@ int parse_script(const char *filename, core_t *fm)
 {
     FILE *file = fopen(filename, "r");
     char *line = NULL;
+    int result = 0;
 
     if (file == NULL) {
         my_error_putstr("Could not open file\n");
         return 84;
     }
-    if (loop(file, line, fm) == 84)
-        return 84;
-    if (line)
-        free(line);
+    result = loop(file, &line, fm);
+    free(line);
     fclose(file);
-    return 0;
+    return result;
 }

@@ -5,46 +5,66 @@
 ** memory_handling
 */
 
-#include "struct.h"
+#include "my.h"
+#include <CSFML/Graphics/Font.h>
+#include <CSFML/Graphics/RenderWindow.h>
 #include <CSFML/Graphics/Sprite.h>
 #include <CSFML/Graphics/Text.h>
 #include <CSFML/Graphics/Texture.h>
 #include <CSFML/Graphics/Types.h>
+#include <CSFML/System/Clock.h>
 
 /*
-//this is a circular linked list btw.
-
-
-for some reason:
-
-==239388== Invalid read of size 8
-==239388==    at 0x49859E9: sfSprite_getTexture (in /usr/lib/x86_64-linux-gnu/libcsfml-graphics.so.2.6.0)
-==239388==    by 0x10D774: destroy_everything (memory_handling.c:22)
-==239388==    by 0x10AC20: main (main.c:99)
-==239388==  Address 0x189685e0 is 288 bytes inside a block of size 368 free'd
-==239388==    at 0x484A61D: operator delete(void*, unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==239388==    by 0x10D7A7: destroy_everything (memory_handling.c:26)
-==239388==    by 0x10AC20: main (main.c:99)
-
-
+** sfSprite and sfText don't own their texture / font, so grab the pointer
+** first, destroy the owner, then destroy the resource.
 */
+static void destroy_sprite_and_texture(sfSprite *sprite)
+{
+    sfTexture *texture;
+
+    if (!sprite)
+        return;
+    texture = (sfTexture *)sfSprite_getTexture(sprite);
+    sfSprite_destroy(sprite);
+    if (texture)
+        sfTexture_destroy(texture);
+}
+
+static void destroy_text_and_font(sfText *text)
+{
+    sfFont *font;
+
+    if (!text)
+        return;
+    font = (sfFont *)sfText_getFont(text);
+    sfText_destroy(text);
+    if (font)
+        sfFont_destroy(font);
+}
+
+static void destroy_clocks(lag_t *time)
+{
+    if (time->refresh_clock)
+        sfClock_destroy(time->refresh_clock);
+    if (time->global_clock)
+        sfClock_destroy(time->global_clock);
+    if (time->tick_clock)
+        sfClock_destroy(time->tick_clock);
+}
+
 void destroy_everything(core_t *fm)
 {
-    const tow_t *head_ref = fm->head_tow;
-    tow_t *current = fm->head_tow;
-    sfTexture *texture_sp;
-
-    if (head_ref == NULL)
-        return;
-    do {
-        texture_sp = (sfTexture *)sfSprite_getTexture(current->sprite);
-        if (texture_sp)
-            sfTexture_destroy(texture_sp);
-        sfSprite_destroy(current->sprite);
-        current = current->next;
-    } while (current != head_ref);
-    sfText_destroy(fm->text);
-    texture_sp = (sfTexture *)sfSprite_getTexture(fm->background.back_sp);
-    sfTexture_destroy(texture_sp);
-    sfSprite_destroy(fm->background.back_sp);
+    free_list(fm->head);
+    fm->head = NULL;
+    free_list_tower(fm->head_tow);
+    fm->head_tow = NULL;
+    free_list_rectangle(fm->head_rec, fm);
+    destroy_text_and_font(fm->text);
+    fm->text = NULL;
+    destroy_sprite_and_texture(fm->background.back_sp);
+    fm->background.back_sp = NULL;
+    destroy_clocks(&fm->time);
+    if (fm->window)
+        sfRenderWindow_destroy(fm->window);
+    fm->window = NULL;
 }

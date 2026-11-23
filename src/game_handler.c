@@ -77,13 +77,17 @@ static int score_str(core_t *fm)
     char *buffer = malloc(35);
     sfTime elapsed_time = sfClock_getElapsedTime(fm->time.global_clock);
     long long frame = sfTime_asSeconds(elapsed_time);
+    char *frame_str = num_to_str(frame);
 
-    if (!buffer) {
+    if (!buffer || !frame_str) {
+        free(buffer);
+        free(frame_str);
         my_error_putstr("did not allocate properly");
         return 84;
     }
     my_strcpy(buffer, "time : ");
-    my_strcat(buffer, num_to_str(frame));
+    my_strcat(buffer, frame_str);
+    free(frame_str);
     sfText_setString(fm->text, buffer);
     sfRenderWindow_drawText(fm->window, fm->text, NULL);
     free(buffer);
