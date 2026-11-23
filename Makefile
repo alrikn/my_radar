@@ -12,6 +12,7 @@ TEST_BIN = unit_tests
 SRC = ./main.c \
 	./src/memory/background.c \
 	./src/linked_lists/linked_list_air.c \
+	./src/linked_lists/linked_list_rectangle.c \
 	./src/linked_lists/linked_list_tower.c \
 	./src/interaction/time_handler.c \
 	./src/read_file.c \

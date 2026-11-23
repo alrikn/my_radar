@@ -81,4 +81,5 @@ void add_to_list_rec(rect_t **head, core_t *fm, bucket_t *buc);
 void tower_plane_interaction(core_t *fm);
 void free_list_tower(tow_t *head);
 void destroy_everything(core_t *fm);
+void draw_rectangle_list(rect_t *head, sfRenderWindow *window);
 #endif /* COMMON_H */

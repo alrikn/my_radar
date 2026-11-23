@@ -86,6 +86,7 @@ static void division_handler(core_t *fm)
     }
     fm->tower_num = 0;
     planes[num] = NULL;
+    free_list_rectangle(fm->head_rec, fm);
     division(fm, planes, bucket);
 }
 

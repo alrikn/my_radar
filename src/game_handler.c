@@ -93,6 +93,8 @@ static int score_str(core_t *fm)
 int game_handler(sfEvent *event, core_t *fm)
 {
     handle_delay(fm);
+    if (fm->status.debug_mode == true)
+        draw_rectangle_list(fm->head_rec, fm->window);
     position_updater(fm);
     draw_air_sprites(fm);
     draw_tower_sprites(fm);

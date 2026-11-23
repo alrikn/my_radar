@@ -162,7 +162,7 @@ void division(core_t *fm, air_t **planes, bucket_t *self)
         new_bucket->dimensions = make_new_dimensions(self, fm);
         new_bucket->top_left = make_new_top_left(fm, self, i);
         if (fm->status.debug_mode == true)
-            draw_bucket_visualiser(new_bucket, fm);
+            add_to_list_rec(&fm->head_rec, fm, new_bucket);
         filtered_planes = filter_planes(fm, planes, new_bucket);
         division(fm, filtered_planes, new_bucket);
     }

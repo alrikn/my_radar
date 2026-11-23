@@ -19,7 +19,7 @@ static rect_t *create_node(core_t *fm, bucket_t *buc)
     sfRectangleShape_setSize(rectangle, buc->dimensions);
     sfRectangleShape_setFillColor(rectangle, sfTransparent);
     sfRectangleShape_setPosition(rectangle, buc->top_left);
-    sfRectangleShape_setOutlineColor(rectangle, sfWhite);
+    sfRectangleShape_setOutlineColor(rectangle, sfRed);
     sfRectangleShape_setOutlineThickness(rectangle, 2.1);
     new->rectangle = rectangle;
     fm->num_rec++;
@@ -140,4 +140,16 @@ void free_list_rectangle(rect_t *head, core_t *fm)
     } while (temp != NULL && temp != head);
     fm->head_rec = NULL;
     fm->num_rec = 0;
+}
+
+void draw_rectangle_list(rect_t *head, sfRenderWindow *window)
+{
+    rect_t *current = head;
+
+    if (!head)
+        return;
+    do {
+        sfRenderWindow_drawRectangleShape(window, current->rectangle, NULL);
+        current = current->next;
+    } while (current != NULL && current != head);
 }
