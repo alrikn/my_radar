@@ -31,7 +31,7 @@ typedef struct tower {
 
 typedef struct rectangle {
     sfVector2f top_left;
-    long long int num;
+    long long int num; //num is the unique identifier for each rectangle in the linked list
     sfVector2f dimensions;
     sfRectangleShape *rectangle;
     struct rectangle *next;

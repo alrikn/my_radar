@@ -31,41 +31,40 @@ static rect_t *create_node(core_t *fm, bucket_t *buc)
 
 static void link_to_list_rec(rect_t **head, rect_t *node)
 {
-    rect_t *last;
+    rect_t *last = *head;
 
     if (!node)
         return;
     if (*head == NULL) {
         *head = node;
         node->next = node;
-        node->prev = node;
         return;
     }
-    last = (*head)->prev;
+    while (last->next != NULL)
+        last = last->next;
     last->next = node;
     node->prev = last;
-    node->next = *head;
-    (*head)->prev = node;
 }
 
+/*
+no longer a circular linked list
+*/
 void add_to_list_rec(rect_t **head, core_t *fm, bucket_t *buc)
 {
     rect_t *new = create_node(fm, buc);
-    rect_t *last;
+    rect_t *last = *head;
 
     if (!new)
         return;
     if (*head == NULL) {
         *head = new;
         new->next = new;
-        new->prev = new;
         return;
     }
-    last = (*head)->prev;
+    while (last->next != NULL)
+        last = last->next;
     last->next = new;
     new->prev = last;
-    new->next = *head;
-    (*head)->prev = new;
 }
 
 static void free_helper(rect_t *chosen_one)
@@ -75,11 +74,12 @@ static void free_helper(rect_t *chosen_one)
     chosen_one = NULL;
 }
 
+//in case of an empty list or if the node to delete is the only node in the list
 static int exceptions(rect_t **head, long int num, rect_t *current)
 {
     if (*head == NULL)
         return 84;
-    if (current->next == *head) {
+    if (current->next == NULL && current->prev == NULL) {
         if (current->num == num) {
             free_helper(current);
             *head = NULL;
@@ -98,10 +98,13 @@ static int search_del(rect_t *temp, rect_t **head, long int n, rect_t **to_del)
             break;
         }
         temp = temp->next;
-    } while (temp != *head);
+    } while (temp != NULL || temp != *head);
     return 0;
 }
 
+/*
+This deletes a node from the linked list of rectangles.
+*/
 int delete_node_rec(rect_t **head, long int num)
 {
     rect_t *current = *head;
@@ -116,8 +119,6 @@ int delete_node_rec(rect_t **head, long int num)
     search_del(current, head, num, &to_delete);
     if (to_delete == NULL)
         return 84;
-    if (to_delete == *head)
-        *head = to_delete->next;
     to_delete->prev->next = to_delete->next;
     to_delete->next->prev = to_delete->prev;
     free_helper(to_delete);
@@ -133,8 +134,8 @@ void free_list_rectangle(rect_t *head, core_t *fm)
         return;
     do {
         next_node = temp->next;
-        delete_node_rec(&temp, temp->num);
+        free_helper(temp);
         temp = next_node;
-    } while (temp != head);
+    } while (temp != NULL || temp != head);
     fm->head_rec = NULL;
 }
