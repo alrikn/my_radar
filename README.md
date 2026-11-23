@@ -32,8 +32,13 @@ To show the help message:
 - If a collision happens within a control tower's range, it's prevented.
 - The program can efficiently handle up to **10,000 planes**.
 
+## Options
+- 'L' to disable or enable hitboxes.
+- 'S' to disable or enable sprites.
+- 'D' t enable or disable debug mode.
+
+
 ## Disclaimer
 
 You need to have the csfml library installed to run this.
 
-There is a slight mem leak so be careful
