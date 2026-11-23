@@ -58,7 +58,6 @@ void add_to_list_rec(rect_t **head, core_t *fm, bucket_t *buc)
         return;
     if (*head == NULL) {
         *head = new;
-        new->next = new;
         return;
     }
     while (last->next != NULL)
