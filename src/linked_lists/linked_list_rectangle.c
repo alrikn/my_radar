@@ -98,12 +98,13 @@ static int search_del(rect_t *temp, rect_t **head, long int n, rect_t **to_del)
             break;
         }
         temp = temp->next;
-    } while (temp != NULL || temp != *head);
+    } while (temp != NULL && temp != *head);
     return 0;
 }
 
 /*
 This deletes a node from the linked list of rectangles.
+might break if the node to delete is the head of the list, but I think it should work fine.
 */
 int delete_node_rec(rect_t **head, long int num)
 {
@@ -136,6 +137,7 @@ void free_list_rectangle(rect_t *head, core_t *fm)
         next_node = temp->next;
         free_helper(temp);
         temp = next_node;
-    } while (temp != NULL || temp != head);
+    } while (temp != NULL && temp != head);
     fm->head_rec = NULL;
+    fm->num_rec = 0;
 }

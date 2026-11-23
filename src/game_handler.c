@@ -52,7 +52,7 @@ void draw_rec_sprites(core_t *fm)
         sfRenderWindow_drawRectangleShape(fm->window,
         current->rectangle, NULL);
         current = current->next;
-    } while (current != head_ref);
+    } while (current != NULL && current != head_ref);
 }
 
 void draw_tower_sprites(core_t *fm)
