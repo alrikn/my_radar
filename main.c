@@ -6,7 +6,7 @@
 */
 
 #include "./include/my.h"
-#include <SFML/Window/Event.h>
+#include <CSFML/Window/Event.h>
 #include <stdbool.h>
 
 static int explanation(void)

@@ -11,21 +11,21 @@
 
 void reach_edges(air_t *airplane, core_t *fm)
 {
-    if (airplane->position.x >= fm->mode.width) {
+    if (airplane->position.x >= fm->mode.size.x) {
         my_cooler_putstr("reached edge right side\n");
         airplane->position.x = 0;
     }
     if (airplane->position.x < 0) {
         my_cooler_putstr("reached edge left side\n");
-        airplane->position.x = fm->mode.width;
+        airplane->position.x = fm->mode.size.x;
     }
-    if (airplane->position.y >= fm->mode.height) {
+    if (airplane->position.y >= fm->mode.size.y) {
         my_cooler_putstr("reached edge bottom side\n");
         airplane->position.y = 0;
     }
     if (airplane->position.y < 0) {
         my_cooler_putstr("reached edge top side\n");
-        airplane->position.y = fm->mode.height;
+        airplane->position.y = fm->mode.size.y;
     }
 }
 

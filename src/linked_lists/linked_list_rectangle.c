@@ -7,7 +7,7 @@
 
 #include "my.h"
 #include "struct.h"
-#include <SFML/Graphics/RectangleShape.h>
+#include <CSFML/Graphics/RectangleShape.h>
 
 static rect_t *create_node(core_t *fm, bucket_t *buc)
 {

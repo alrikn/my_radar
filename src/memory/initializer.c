@@ -16,15 +16,17 @@ void time_init(core_t *fm)
 
 sfText *create_score_text(core_t *fm)
 {
-    sfText *text = sfText_create();
     sfVector2f position = {20, 20};
     sfFont *font = sfFont_createFromFile("assets/Xolonium-Regular.ttf");
+    sfText *text = NULL;
 
     if (!font) {
         my_error_putstr("font failed to load\n");
         fm->status.game_crash = true;
+        fm->status.game_over = true;
+        return NULL;
     }
-    sfText_setFont(text, font);
+    text = sfText_create(font);
     sfText_setCharacterSize(text, 30);
     sfText_setFillColor(text, sfWhite);
     sfText_setString(text, "time = 0");
@@ -34,13 +36,14 @@ sfText *create_score_text(core_t *fm)
 
 int initializer(core_t *fm, char *filename)
 {
-    sfVideoMode mode = {1920, 1080, 64};
-    sfUint32 style = {sfClose | sfResize};
+    sfVideoMode mode = {{1920, 1080}, 32};
+    uint32_t style = sfClose | sfResize;
 
     fm->mode = mode;
     time_init(fm);
     fm->text = create_score_text(fm);
-    fm->window = sfRenderWindow_create(mode, "simulator", style, 0);
+    fm->window = sfRenderWindow_create(mode, "simulator", style,
+    sfWindowed, NULL);
     fm->background.back_sp = create_background("assets/background.png", fm);
     parse_script(filename, fm);
     return 0;

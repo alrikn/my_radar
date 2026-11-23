@@ -9,14 +9,12 @@
 
 sfSprite *sprite_texture_add(char *filepath, core_t *fm)
 {
-    sfSprite *sprite = sfSprite_create();
     sfTexture *texture = sfTexture_createFromFile(filepath, NULL);
 
     if (!texture) {
         return NULL;
     }
-    sfSprite_setTexture(sprite, texture, sfTrue);
-    return sprite;
+    return sfSprite_create(texture);
 }
 
 sfSprite *create_background(char *filepath, core_t *fm)

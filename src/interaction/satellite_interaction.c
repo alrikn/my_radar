@@ -6,7 +6,7 @@
 */
 
 #include "my.h"
-#include <SFML/System/Vector2.h>
+#include <CSFML/System/Vector2.h>
 #include <math.h>
 #include <stdbool.h>
 

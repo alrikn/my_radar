@@ -7,17 +7,17 @@
 
 #ifndef INCLUDED_STRUCT_H
     #define INCLUDED_STRUCT_H
-    #include <SFML/Audio/Types.h>
-    #include <SFML/Graphics/Types.h>
-    #include <SFML/Graphics.h>
-    #include <SFML/Graphics/Sprite.h>
-    #include <SFML/Graphics/CircleShape.h>
-    #include <SFML/Graphics/RectangleShape.h>
-    #include <SFML/System/Vector2.h>
-    #include <SFML/Window/Event.h>
-    #include <SFML/System/Vector2.h>
+    #include <CSFML/Audio/Types.h>
+    #include <CSFML/Graphics/Types.h>
+    #include <CSFML/Graphics.h>
+    #include <CSFML/Graphics/Sprite.h>
+    #include <CSFML/Graphics/CircleShape.h>
+    #include <CSFML/Graphics/RectangleShape.h>
+    #include <CSFML/System/Vector2.h>
+    #include <CSFML/Window/Event.h>
+    #include <CSFML/System/Vector2.h>
     #include <stdbool.h>
-    #include <SFML/Audio/Music.h>
+    #include <CSFML/Audio/Music.h>
 
 typedef struct tower {
     sfVector2f position;

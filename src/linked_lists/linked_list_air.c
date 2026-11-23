@@ -6,10 +6,10 @@
 */
 
 #include "my.h"
-#include <SFML/Graphics/RectangleShape.h>
-#include <SFML/System/Vector2.h>
-#include <SFML/Graphics/Sprite.h>
-#include <SFML/Graphics/Types.h>
+#include <CSFML/Graphics/RectangleShape.h>
+#include <CSFML/System/Vector2.h>
+#include <CSFML/Graphics/Sprite.h>
+#include <CSFML/Graphics/Types.h>
 
 static sfRectangleShape *square(sfVector2f pos)
 {
@@ -53,8 +53,7 @@ static air_t *create_node(core_t *fm)
 
     if (!new)
         return NULL;
-    new->sprite = sfSprite_create();
-    sfSprite_setTexture(new->sprite, text, sfTrue);
+    new->sprite = sfSprite_create(text);
     sfSprite_setScale(new->sprite, scale);
     sfSprite_setOrigin(new->sprite, (sfVector2f){siz.x / 2.0f, siz.y / 2.0f});
     new->square = square(new->position);

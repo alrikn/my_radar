@@ -6,12 +6,12 @@
 */
 
 #include "my.h"
-#include <SFML/Graphics/CircleShape.h>
-#include <SFML/Graphics/Color.h>
-#include <SFML/System/Vector2.h>
+#include <CSFML/Graphics/CircleShape.h>
+#include <CSFML/Graphics/Color.h>
+#include <CSFML/System/Vector2.h>
 #include "struct.h"
-#include <SFML/Graphics/Sprite.h>
-#include <SFML/Graphics/Types.h>
+#include <CSFML/Graphics/Sprite.h>
+#include <CSFML/Graphics/Types.h>
 
 static sfCircleShape *circles(double radius, sfVector2f pos)
 {
@@ -41,8 +41,7 @@ static tow_t *create_node(core_t *fm)
     new->position.y = fm->temp_tow.position.y;
     new->position.x = fm->temp_tow.position.x;
     new->radius = fm->temp_tow.radius;
-    new->sprite = sfSprite_create();
-    sfSprite_setTexture(new->sprite, text, sfTrue);
+    new->sprite = sfSprite_create(text);
     sfSprite_setScale(new->sprite, scale);
     sfSprite_setOrigin(new->sprite, (sfVector2f){siz.x / 2.0f, siz.y / 2.0f});
     new->circle = circles(fm->temp_tow.radius, new->position);

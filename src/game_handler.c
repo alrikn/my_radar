@@ -5,10 +5,10 @@
 ** game_handler
 */
 #include "my.h"
-#include <SFML/Graphics/CircleShape.h>
-#include <SFML/Graphics/RenderWindow.h>
-#include <SFML/Graphics/Types.h>
-#include <SFML/System/Time.h>
+#include <CSFML/Graphics/CircleShape.h>
+#include <CSFML/Graphics/RenderWindow.h>
+#include <CSFML/Graphics/Types.h>
+#include <CSFML/System/Time.h>
 #include <stdbool.h>
 
 static void handle_air_exceptions(core_t *fm, air_t *current)

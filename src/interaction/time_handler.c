@@ -6,7 +6,7 @@
 */
 
 #include "my.h"
-#include <SFML/System/Vector2.h>
+#include <CSFML/System/Vector2.h>
 
 bool update_animate(core_t *fm)
 {

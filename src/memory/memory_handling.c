@@ -6,10 +6,10 @@
 */
 
 #include "struct.h"
-#include <SFML/Graphics/Sprite.h>
-#include <SFML/Graphics/Text.h>
-#include <SFML/Graphics/Texture.h>
-#include <SFML/Graphics/Types.h>
+#include <CSFML/Graphics/Sprite.h>
+#include <CSFML/Graphics/Text.h>
+#include <CSFML/Graphics/Texture.h>
+#include <CSFML/Graphics/Types.h>
 
 /*
 //this is a circular linked list btw.
